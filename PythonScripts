@@ -1,0 +1,24 @@
+import docx
+
+def extract_text_from_docx(docx_path):
+    doc = docx.Document(docx_path)
+    full_text = []
+    for para in doc.paragraphs:
+        full_text.append(para.text)
+    return '\n'.join(full_text)
+
+docx_path = 'path/to/your/document.docx'
+text = extract_text_from_docx(docx_path)
+
+def highlight_text_in_docx(docx_path, text_to_highlight, output_path):
+    doc = docx.Document(docx_path)
+    for para in doc.paragraphs:
+        for run in para.runs:
+            if text_to_highlight in run.text:
+                run.font.highlight_color = docx.enum.text.WD_COLOR_INDEX.YELLOW
+                break
+
+    doc.save(output_path)
+
+output_path = 'path/to/output/document.docx'
+highlight_text_in_docx(docx_path, 'text_to_highlight', output_path)
